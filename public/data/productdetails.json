@@ -1,0 +1,42 @@
+[
+  {
+    "ProductId": 1,
+    "TechnicalSpecs": {
+      "Weight": "500g",
+      "Calories": 950,
+      "Ingredients": ["Harina","Tomate","Mozzarella","Albahaca"],
+      "Allergens": ["Gluten","Lácteos"],
+      "PreparationTimeMinutes": 15
+    }
+  },
+  {
+    "ProductId": 2,
+    "TechnicalSpecs": {
+      "Weight": "300g",
+      "Calories": 540,
+      "Ingredients": ["Arroz","Pescado","Alga","Salsa"],
+      "Allergens": ["Pescado"],
+      "PreparationTimeMinutes": 30
+    }
+  },
+  {
+    "ProductId": 3,
+    "TechnicalSpecs": {
+      "Weight": "350g",
+      "Calories": 820,
+      "Ingredients": ["Carne","Pan","Lechuga","Tomate","Queso"],
+      "Allergens": ["Gluten","Lácteos"],
+      "PreparationTimeMinutes": 12
+    }
+  },
+  {
+    "ProductId": 4,
+    "TechnicalSpecs": {
+      "Weight": "250g",
+      "Calories": 320,
+      "Ingredients": ["Lechuga","Pollo","Queso","Aderezo"],
+      "Allergens": ["Lácteos"],
+      "PreparationTimeMinutes": 10
+    }
+  }
+]
