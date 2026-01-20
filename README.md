@@ -5,17 +5,17 @@ Aplicación web unificada: React + Express + Prisma + PostgreSQL
 ##  Inicio
 
 \\\bash
-npm install
-npx prisma generate
-npm test     # Probar BD
-npm start    # Servidor (puerto 3001)
+- npm install
+- npx prisma generate
+- npm test     # Probar BD
+- npm start    # Servidor (puerto 3001)
 \\\
 
 ##  Estructura
 
-- \/src\ - Frontend React
-- \/routes\ - Backend Express
-- \/prisma\ - Schema BD
+- \src\ - Frontend React
+- \routes\ - Backend Express
+- \prisma\ - Schema BD
 - \server.js\ - Servidor único
 
 ##  Endpoints
