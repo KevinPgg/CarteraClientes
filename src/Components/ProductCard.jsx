@@ -25,6 +25,8 @@ export default function ProductCard({ product }) {
         alt={product.name}
         onError={handleImageError}
         className="card-img-top"
+        width="200"
+        height="200"
       />
       <div className="card-body">
         <h5 className="card-title">{product.name}</h5>

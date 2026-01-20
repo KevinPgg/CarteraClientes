@@ -20,9 +20,21 @@ export default function Login() {
 
     try {
       const result = await loginUser(user, password);
+      
       if (result) {
-        auth.login(result.cardCode, result.cardName, result.tipo);
-        navigate("/account");
+        console.log('🔐 Llamando auth.login con:', result);
+        // Pasar objeto completo del usuario al contexto
+        auth.login(result);
+        
+        // Pequeño delay para asegurar que el estado se actualice
+        setTimeout(() => {
+          console.log('🔐 Auth después de login:', { 
+            isAuthenticated: auth.isAuthenticated, 
+            cardCode: auth.cardCode,
+            cardName: auth.cardName 
+          });
+          navigate("/account");
+        }, 100);
       } else {
         setError("Usuario o contraseña incorrectos");
       }
@@ -48,7 +60,7 @@ export default function Login() {
 
   return (
     <div className="login-page">
-      <div className="login-container">
+      <div className="login-container" style={{textAlignLast:"center"}}>
         <h1>Iniciar Sesión</h1>
         <form onSubmit={handleLogin}>
           <div className="form-group">
@@ -78,14 +90,6 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="test-credentials">
-          <p><strong>Credenciales de prueba:</strong></p>
-          <ul>
-            <li>user0916 / CUser*0916</li>
-            <li>user9925 / CUser*9925</li>
-            <li>user0049 / CUser*0049</li>
-          </ul>
-        </div>
       </div>
     </div>
   );

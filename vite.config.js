@@ -14,6 +14,12 @@ export default defineConfig({
     host: '0.0.0.0', // Permite acceso desde cualquier dispositivo en la red
     port: 5173,
     strictPort: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      }
+    }
   },
   preview: {
     host: '0.0.0.0', // Para el modo preview también

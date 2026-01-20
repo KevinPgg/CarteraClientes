@@ -8,9 +8,17 @@ export function AuthProvider({ children }) {
     cardCode: "",
     cardName: "",
     tipo: "",
+    usuario: "",
+    email: [],
+    notificacion: false,
     isAuthenticated: false,
+    userSelected: "",
     loginTime: null,
   });
+
+  const setUserSelected = (value) => {
+    setSession((prev) => ({ ...prev, userSelected: value }));
+  };
 
   // Cargar sesión desde sessionStorage al iniciar
   useEffect(() => {
@@ -22,7 +30,11 @@ export function AuthProvider({ children }) {
           cardCode: data.cardCode,
           cardName: data.cardName ?? data.userName,
           tipo: data.tipo || "C",
-          isAuthenticated: true,
+          usuario: data.usuario || "",
+          email: data.email || [],
+          notificacion: data.notificacion || false,
+          isAuthenticated: !!data.isAuthenticated,
+          userSelected: data.userSelected || "",
           loginTime: new Date(data.loginTime || Date.now()),
         });
       } catch (err) {
@@ -31,27 +43,35 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const login = (cardCode, cardName, tipo) => {
+  // Sincronizar sesión en almacenamiento solo si está autenticado
+  useEffect(() => {
+    if (session.isAuthenticated) {
+      sessionStorage.setItem("demoecommerce_auth", JSON.stringify(session));
+    }
+  }, [session]);
+
+  /**
+   * Inicia sesión con los datos del usuario desde loginUser
+   * @param {Object} userData - Datos del usuario completos
+   */
+  const login = (userData) => {
     const newSession = {
-      cardCode,
-      cardName,
-      tipo,
+      cardCode: userData.cardCode,
+      cardName: userData.cardName,
+      tipo: userData.tipo,
+      usuario: userData.usuario,
+      email: userData.email || [],
+      notificacion: userData.notificacion || false,
+      userSelected: "",
       isAuthenticated: true,
       loginTime: new Date(),
     };
-    
-    sessionStorage.setItem(
-      "demoecommerce_auth",
-      JSON.stringify({
-        cardCode,
-        cardName,
-        tipo,
-        userName: cardName,
-        loginTime: newSession.loginTime.toISOString(),
-      })
-    );
-    
+
+    console.log("🔒 Nueva sesión:", newSession);
     setSession(newSession);
+    // Persistir inmediatamente tras login
+    sessionStorage.setItem("demoecommerce_auth", JSON.stringify(newSession));
+    console.log("🔒 AuthContext.login completado");
   };
 
   const logout = () => {
@@ -60,7 +80,11 @@ export function AuthProvider({ children }) {
       cardCode: "",
       cardName: "",
       tipo: "C",
+      usuario: "",
+      email: [],
+      notificacion: false,
       isAuthenticated: false,
+      userSelected: "",
       loginTime: null,
     });
   };
@@ -69,6 +93,7 @@ export function AuthProvider({ children }) {
     ...session,
     login,
     logout,
+    setUserSelected,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

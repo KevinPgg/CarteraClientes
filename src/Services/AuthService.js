@@ -1,27 +1,41 @@
-// src/Services/AuthService.js
-
 /**
- * Autentica un usuario contra usuarios.json
+ * Autentica un usuario contra la API backend
  * @param {string} usuario - Usuario a validar
  * @param {string} contrasena - Contraseña a validar
- * @returns {Promise<{cardCode: string, cardName: string, tipo: string} | null>} Usuario o null
+ * @returns {Promise<{id, cardCode, cardName, tipo, usuario, email, notificacion} | null>} Usuario o null
  */
 export async function loginUser(usuario, contrasena) {
   if (!usuario || !contrasena) return null;
 
+
   try {
-    const response = await fetch("/data/usuarios.json");
-    const usuarios = await response.json();
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ usuario, contrasena }),
+    });
 
-    const user = usuarios.find(
-      (u) => u.Usuario === usuario && u.Contrasena === contrasena
-    );
+    if (!response.ok) {
+      console.warn(`Login failed with status ${response.status}`);
+      return null;
+    }
 
-    if (user) {
+    const user = await response.json();
+    console.log('✅ Backend response:', user);
+    
+    // El backend retorna: id, cardCode, cardName, tipo, usuario, email, notificacion
+    if (user && user.cardCode) {
+      console.log('✅ envio correcto')
       return {
-        cardCode: user.CardCode,
-        cardName: user.CardName || user.Usuario,
-        tipo: user.Tipo,
+        id: user.id,
+        cardCode: user.cardCode,
+        cardName: user.cardName,
+        tipo: user.tipo,
+        usuario: user.usuario,
+        email: user.email || [],
+        notificacion: user.notificacion,
       };
     }
 

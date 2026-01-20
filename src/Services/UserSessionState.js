@@ -3,8 +3,13 @@ import { useState } from "react";
 
 let subscribers = [];
 let session = {
+  id: null,
   cardCode: "",
   cardName: "",
+  tipo: "",
+  usuario: "",
+  email: [],
+  notificacion: false,
   isAuthenticated: false,
   loginTime: null,
 };
@@ -12,10 +17,19 @@ let session = {
 export function useUserSessionState() {
   const [state, setState] = useState(session);
 
-  const setUser = (code, name) => {
+  /**
+   * Establece el usuario actual en la sesión
+   * @param {Object} userData - Datos del usuario desde loginUser
+   */
+  const setUser = (userData) => {
     session = {
-      cardCode: code,
-      cardName: name,
+      id: userData.id,
+      cardCode: userData.cardCode,
+      cardName: userData.cardName,
+      tipo: userData.tipo,
+      usuario: userData.usuario,
+      email: userData.email || [],
+      notificacion: userData.notificacion,
       isAuthenticated: true,
       loginTime: new Date(),
     };
@@ -25,8 +39,13 @@ export function useUserSessionState() {
 
   const logout = () => {
     session = {
+      id: null,
       cardCode: "",
       cardName: "",
+      tipo: "",
+      usuario: "",
+      email: [],
+      notificacion: false,
       isAuthenticated: false,
       loginTime: null,
     };

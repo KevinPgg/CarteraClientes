@@ -1,0 +1,706 @@
+/**
+ * Estilos para componentes de Pedidos
+ * PODetalle, POList, ResumenOrdenes
+ */
+
+/* ============================================
+   CONTENEDOR PRINCIPAL - SCROLL Y LAYOUT
+   ============================================ */
+
+.pedidos-container {
+  height: calc(100vh - 200px); /* Altura viewport menos header y footer aprox */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 15px;
+  background-color: #fffdf3;
+}
+
+/* Scroll personalizado */
+.pedidos-container::-webkit-scrollbar {
+  width: 7px;
+}
+
+.pedidos-container::-webkit-scrollbar-track {
+  background: #eef5e3;
+  border-radius: 4px;
+}
+
+.pedidos-container::-webkit-scrollbar-thumb {
+  background: #6fbf36;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.pedidos-container::-webkit-scrollbar-thumb:hover {
+  background: #4b8f26;
+}
+
+/* Firefox */
+.pedidos-container {
+  scrollbar-color: #6fbf36 #eef5e3;
+  scrollbar-width: thin;
+}
+
+/* Altura máxima para tablas dentro de Pedidos */
+.pedidos-container .table-responsive,
+.po-detalle .table-responsive,
+.po-list .table-responsive,
+.resumen-ordenes .table-responsive {
+  max-height: 55vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  overscroll-behavior: contain;
+  border-radius: 8px;
+}
+
+/* ============================================
+   PO DETALLE - SELECTOR Y TABLA
+   ============================================ */
+
+.filter_PedidoDetalle{
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 15px;
+    flex-direction: row;
+    align-items: center;
+}
+.po-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Filtro de PO/Fechas */
+.po-detalle .selector-po, .AScliente {
+  background: linear-gradient(135deg, #fff8d9 0%, #f1ffe3 100%);
+  border-left: 3px solid #8bc34a;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 8px rgba(139, 195, 74, 0.18);
+}
+.AScliente{
+  margin-top: 10px;
+  display: flex;
+  width: 100%
+}
+
+.Ccliente{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 11px;
+}
+.po-detalle .selector-po label {
+  color: #2f431d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.po-detalle .form-select,
+.po-detalle .form-control {
+  border: 2px solid #6fbf36;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.po-detalle .form-select[multiple] {
+  padding: 8px;
+  min-height: 100px;
+}
+
+.po-detalle .form-select:focus,
+.po-detalle .form-control:focus {
+  border-color: #4b8f26;
+  box-shadow: 0 0 0 0.2rem rgba(79, 143, 38, 0.25);
+  outline: none;
+}
+
+.po-detalle .form-select:hover,
+.po-detalle .form-control:hover {
+  border-color: #4b8f26;
+  background-color: #f8ffe8;
+}
+
+/* Información de PO */
+.po-detalle .info-po {
+  background: white;
+  border-left: 3px solid #6fbf36;
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.po-detalle .info-po h5 {
+  color: #4b8f26;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.po-detalle .info-po .row {
+  gap: 10px;
+}
+
+.po-detalle .info-po .col-md-3 {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-md-3{
+    white-space: nowrap;
+}
+
+#filterType{
+    padding-right: 20px;
+}
+
+#monthSelect{
+    padding-right: 20px;
+}
+
+#yearSelect{
+    width: 100%;
+    padding-right: 20px;
+}
+.col-md-9{
+    gap: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+.po-detalle .info-po strong {
+  color: #2f431d;
+  font-size: 0.9rem;
+}
+
+.po-detalle .info-po .text-muted {
+  color: #666 !important;
+  font-size: 0.85rem;
+}
+
+.po-detalle .badge {
+  padding: 6px 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Cards de resumen */
+.po-detalle .cards-resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.po-detalle .card {
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-top: 4px solid #8bc34a;
+}
+
+.po-detalle .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.po-detalle .card-body {
+  padding: 20px;
+}
+
+.po-detalle .card-body small {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.po-detalle .card-body h5 {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+/* ============================================
+   PO LIST - TABLA MULTI-PO
+   ============================================ */
+
+.po-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.po-list .header-gradient {
+  background: linear-gradient(135deg, #f7d046 0%, #7abf3b 100%);
+  color: #1f2f16;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(122, 191, 59, 0.28);
+}
+
+.po-list .header-gradient h5 {
+  font-size: 1.3rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1f2f16;
+}
+
+.po-list .pedidos-table {
+  font-size: 1rem;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.po-list .pedidos-table th,
+.po-list .pedidos-table td {
+  padding: 12px 10px;
+  vertical-align: middle;
+}
+
+.po-list .pedidos-table thead {
+  position: sticky;
+  top: 0;
+  background: #fff4c2;
+  z-index: 10;
+}
+
+.po-list .pedidos-table thead th {
+  border-color: #e6ddb8;
+  border-bottom: 2px solid #7abf3b;
+  color: #2f431d;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding: 10px 10px;
+  letter-spacing: 0.5px;
+}
+
+.po-list .pedidos-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.po-list .pedidos-table tbody tr:nth-child(even) {
+  background-color: #fff9e8;
+}
+.detalle-table tbody tr:nth-child(even) {
+  background-color: #fff9e8;
+}
+
+.detalle-table tbody tr:hover {
+  background-color: #f7ffe6 !important;
+}
+
+
+.po-list .pedidos-table tbody tr:hover {
+  background-color: #f7ffe6;
+}
+
+.po-list .pedidos-table tbody tr.subtotal {
+  background: linear-gradient(90deg, #fff9e2 0%, #efffe6 100%);
+  border-top: 1px solid #7abf3b;
+  border-bottom: 2px solid #7abf3b;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.po-list .pedidos-table tbody tr.totales {
+  background: linear-gradient(90deg, #fff6d7 0%, #efffe6 100%);
+  border-top: 3px solid #7abf3b;
+  border-bottom: 3px solid #7abf3b;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.po-list .badge {
+  padding: 6px 10px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+/* Tarjetas de resumen */
+.po-list .cards-kpi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.po-list .card {
+  border: none;
+  border-radius: 8px;
+  border-top: 4px solid #7abf3b;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.po-list .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.po-list .card-body {
+  padding: 20px;
+}
+
+.po-list .card-body small {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.po-list .card-body h5 {
+  font-size: 1.6rem;
+  margin-bottom: 0;
+  color: #2f7a31;
+}
+
+/* ============================================
+   RESUMEN ORDENES - TABLA EJECUTIVA
+   ============================================ */
+
+.resumen-ordenes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.resumen-ordenes .header-gradient {
+  background: linear-gradient(135deg, #7abf3b 0%, #d4a017 100%);
+  color: #1f2f16;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(122, 191, 59, 0.28);
+}
+
+.resumen-ordenes .header-gradient h5 {
+  font-size: 1.3rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1f2f16;
+}
+
+.resumen-ordenes .pedidos-table {
+  font-size: 0.85rem;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.resumen-ordenes .pedidos-table thead {
+  position: sticky;
+  top: 0;
+  background: #fffdf3;
+  z-index: 10;
+}
+
+.resumen-ordenes .pedidos-table thead th {
+  border-color: #e6ddb8;
+  border-bottom: 2px solid #7abf3b;
+  color: #2f431d;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 12px 6px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.resumen-ordenes .pedidos-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.resumen-ordenes .pedidos-table tbody tr:nth-child(even) {
+  background-color: #fff9e8;
+}
+
+.resumen-ordenes .pedidos-table tbody tr:hover {
+  background-color: #f7ffe6;
+}
+
+.resumen-ordenes .pedidos-table tbody tr.totales {
+  background: linear-gradient(90deg, #fff6d7 0%, #efffe6 100%);
+  border-top: 2px solid #7abf3b;
+  border-bottom: 2px solid #7abf3b;
+  font-weight: 700;
+}
+
+.resumen-ordenes .pedidos-table td {
+  padding: 10px 6px;
+  vertical-align: middle;
+}
+
+.resumen-ordenes .badge {
+  padding: 6px 10px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+/* Tarjetas de resumen */
+.resumen-ordenes .cards-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.resumen-ordenes .card {
+  border: none;
+  border-radius: 8px;
+  border-top: 4px solid #7abf3b;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.resumen-ordenes .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.resumen-ordenes .card-body {
+  padding: 20px;
+}
+
+.resumen-ordenes .card-body small {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.resumen-ordenes .card-body h5 {
+  font-size: 1.6rem;
+  margin-bottom: 0;
+  color: #2f7a31;
+}
+
+/* Leyenda */
+.resumen-ordenes .leyenda {
+  background: #fff9e8;
+  border: 1px solid #e6ddb8;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+.resumen-ordenes .leyenda .badge {
+  padding: 6px 10px;
+  margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE - TABLETS Y MÓVILES
+   ============================================ */
+
+@media (max-width: 1200px) {
+  .pedidos-container {
+    padding: 15px 10px;
+  }
+
+  .po-detalle .cards-resumen,
+  .po-list .cards-kpi,
+  .resumen-ordenes .cards-summary {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .po-detalle .pedidos-table,
+  .po-list .pedidos-table,
+  .resumen-ordenes .pedidos-table {
+    font-size: 0.8rem;
+  }
+
+  .po-detalle .pedidos-table thead th,
+  .po-list .pedidos-table thead th,
+  .resumen-ordenes .pedidos-table thead th {
+    padding: 10px 6px;
+    font-size: 0.75rem;
+  }
+
+  .po-detalle .pedidos-table td,
+  .po-list .pedidos-table td,
+  .resumen-ordenes .pedidos-table td {
+    padding: 8px 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pedidos-container {
+    height: calc(100vh - 150px);
+    padding: 10px 8px;
+  }
+
+  .po-detalle .selector-po,
+  .po-detalle .info-po {
+    padding: 15px;
+  }
+
+  .po-list .header-gradient,
+  .resumen-ordenes .header-gradient {
+    padding: 15px;
+  }
+
+  .po-list .header-gradient h5,
+  .resumen-ordenes .header-gradient h5 {
+    font-size: 1.1rem;
+  }
+
+  .po-detalle .cards-resumen,
+  .po-list .cards-kpi,
+  .resumen-ordenes .cards-summary {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .po-detalle .card,
+  .po-list .card,
+  .resumen-ordenes .card {
+    border-top: 3px solid;
+  }
+
+  .po-detalle .card-body,
+  .po-list .card-body,
+  .resumen-ordenes .card-body {
+    padding: 15px;
+  }
+
+  .po-detalle .card-body h5,
+  .po-list .card-body h5,
+  .resumen-ordenes .card-body h5 {
+    font-size: 1.3rem;
+  }
+
+  /* Tablas más compactas */
+  .po-detalle .pedidos-table,
+  .po-list .pedidos-table,
+  .resumen-ordenes .pedidos-table {
+    font-size: 0.75rem;
+  }
+
+  .po-detalle .pedidos-table thead th,
+  .po-list .pedidos-table thead th,
+  .resumen-ordenes .pedidos-table thead th {
+    padding: 8px 4px;
+    font-size: 0.7rem;
+  }
+
+  .po-detalle .pedidos-table td,
+  .po-list .pedidos-table td,
+  .resumen-ordenes .pedidos-table td {
+    padding: 6px 4px;
+  }
+
+  .resumen-ordenes .leyenda {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .pedidos-container {
+    height: calc(100vh - 120px);
+    padding: 8px 5px;
+  }
+
+  .po-detalle .selector-po,
+  .po-detalle .info-po {
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .po-detalle .info-po .row {
+    flex-direction: column;
+  }
+
+  .po-detalle .info-po .col-md-3 {
+    min-width: 100%;
+  }
+
+  .po-detalle .form-select {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+
+  .po-detalle .cards-resumen,
+  .po-list .cards-kpi,
+  .resumen-ordenes .cards-summary {
+    grid-template-columns: 1fr;
+  }
+
+  /* Tablas en móvil con scroll horizontal */
+  .table-responsive {
+    border-radius: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .po-detalle .pedidos-table,
+  .po-list .pedidos-table,
+  .resumen-ordenes .pedidos-table {
+    font-size: 0.7rem;
+    min-width: 600px;
+  }
+
+  .po-detalle .pedidos-table thead th,
+  .po-list .pedidos-table thead th,
+  .resumen-ordenes .pedidos-table thead th {
+    padding: 6px 3px;
+    font-size: 0.65rem;
+  }
+
+  .po-detalle .pedidos-table td,
+  .po-list .pedidos-table td,
+  .resumen-ordenes .pedidos-table td {
+    padding: 5px 3px;
+  }
+
+  .po-detalle .badge,
+  .po-list .badge,
+  .resumen-ordenes .badge {
+    padding: 4px 6px;
+    font-size: 0.7rem;
+  }
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.fw-bold {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+/* Animaciones suaves */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.po-detalle,
+.po-list,
+.resumen-ordenes {
+  animation: slideIn 0.3s ease-out;
+}
+

@@ -1,13 +1,49 @@
 // src/Components/AccountModal.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import OrderBuilded from "./OrderBuilded";
+import PODetalle from "./PODetalle";
+import POList from "./POList";
+import ResumenOrdenes from "./ResumenOrdenes";
+import { getPedidos } from "../Services/OrderService";
+import "../styles/Pedidos.css";
+import SelectClient from "./selectClient";
+import ToggleVisibilityButton from './ToggleVisibilityButton';
+
+
 
 export default function AccountModal() {
   const auth = useAuth();
   const navigate = useNavigate();
   const [active, setActive] = useState(0);
+  const [pedidos, setPedidos] = useState([]);
+  const [viewType, setViewType] = useState("resumen"); // "detalle", "lista", "resumen"
+  const [loading, setLoading] = useState(false);
+
+  // Cargar pedidos cuando se abre la pestaña de Pedidos
+  useEffect(() => {
+    if (active !== 2) return;
+    if (auth.tipo === 'C') {
+      loadPedidos();
+    }
+  }, [active, auth.tipo]);
+
+  const loadPedidos = async () => {
+    setLoading(true);
+    try {
+      // Para tipo C: usar auth.cardName; para tipo A/S: usar auth.userSelected
+      const clientName = auth.tipo === 'C' ? auth.cardName : auth.userSelected;
+      const orders = await getPedidos(clientName);
+      console.log("📊 [AccountModal] Pedidos cargados:", orders);
+      setPedidos(orders || []);
+    } catch (error) {
+      console.error("❌ Error cargando pedidos:", error);
+      setPedidos([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = () => {
     auth.logout();
@@ -33,7 +69,7 @@ export default function AccountModal() {
           className={`tab-button ${active === 2 ? "active" : ""}`}
           onClick={() => setActive(2)}
         >
-          Deudas
+          Pedidos
         </button>
       </div>
 
@@ -74,8 +110,74 @@ export default function AccountModal() {
         )}
         
         {active === 2 && (
-          <div>
-            <p>Aquí van las deudas 👹</p>
+          <div className="pedidos-container">
+            <h3 style={{ margin: 0 }}>
+                {viewType === "resumen" && "Resumen de Órdenes"}
+                {viewType === "lista" && "Listado de Órdenes"}
+                {viewType === "detalle" && "Detalle de Órdenes"}
+            </h3>
+            <div className="d-flex justify-content-between align-items-center mb-4 Ccliente">
+              {(auth.tipo === 'A' || auth.tipo === 'S') ? (
+                <div className="d-flex align-items-center AScliente" style={{ gap: '12px' }}>
+                  <SelectClient
+                    onChange={({ card_name, pedidos: peds, isLoading }) => {
+                      if (auth.setUserSelected) {
+                        auth.setUserSelected(card_name || "");
+                      }
+                      setPedidos(peds || []);
+                      setLoading(!!isLoading);
+                    }}
+                  />
+                  <div>
+                    <label style={{ marginRight: "0.5rem", fontWeight: "500" }}>Vista:</label>
+                    <select 
+                      className="form-select" 
+                      style={{ width: "200px" }}
+                      value={viewType} 
+                      onChange={(e) => setViewType(e.target.value)}
+                    >
+                      <option value="resumen">Resumen</option>
+                      <option value="lista">Listado</option>
+                      <option value="detalle">Detalle</option>
+                    </select>
+                  </div>
+                  {(viewType === "detalle")?(<ToggleVisibilityButton 
+                    classNames={["selector-po", "info-po"]}
+                    label="Filtros"
+                    iconSrc="/data/filter.png"
+                  />):null}
+                  
+                </div>
+              ) : (
+                <select 
+                  className="form-select" 
+                  style={{ width: "200px" }}
+                  value={viewType} 
+                  onChange={(e) => setViewType(e.target.value)}
+                >
+                  <option value="resumen">Resumen</option>
+                  <option value="lista">Listado</option>
+                  <option value="detalle">Detalle</option>
+                </select>
+              )}  
+              {((viewType === "detalle")&&(auth.tipo==='C'))?(<ToggleVisibilityButton 
+                    classNames={["selector-po", "info-po"]}
+                    label="Filtros"
+                    iconSrc="/data/filter.png"
+                  />):null}
+            </div>
+
+            {loading ? (
+              <div className="alert alert-info">Cargando pedidos...</div>
+            ) : pedidos.length === 0 ? (
+              <div className="alert alert-warning">No hay pedidos para mostrar</div>
+            ) : (
+              <>
+                {viewType === "resumen" && <ResumenOrdenes pedidos={pedidos} cardName={auth.tipo === 'C' ? auth.cardName : auth.userSelected} />}
+                {viewType === "lista" && <POList pedidos={pedidos} cardName={auth.tipo === 'C' ? auth.cardName : auth.userSelected} />}
+                {viewType === "detalle" && <PODetalle pedidos={pedidos} cardName={auth.tipo === 'C' ? auth.cardName : auth.userSelected} />}
+              </>
+            )}
           </div>
         )}
       </div>

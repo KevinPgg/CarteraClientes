@@ -92,7 +92,7 @@ export default function Shop() {
         </div>
       </div>
 
-      <div className="product-grid">
+      <div className="product-grid" style={{overflowY:"auto", maxHeight:"69vh", borderRadius:"11px"}}>
         {filtered === null ? (
           <p>Cargando productos...</p>
         ) : filtered.length === 0 ? (

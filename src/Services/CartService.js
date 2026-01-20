@@ -1,6 +1,6 @@
 // src/services/CartService.js
 import { useState, useEffect } from "react";
-import { CartItem } from "../Models/CartItem";
+import { CartItem } from "../Models/CartItem"; // Cliente model for shopping cart
 
 let subscribers = [];
 

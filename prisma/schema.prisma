@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  cardCode     String?  @map("card_code") @db.VarChar(25)
+  cardName     String?  @map("card_name") @db.VarChar(150)
+  tipo         String?  @db.VarChar(1)
+  notificacion Boolean
+  email        String[] @map("email_")
+  password     String?  @map("password_")
+  usuario      String?  @unique
+
+  @@map("users")
+}
+
+model Cartera {
+  id             Int       @id @default(autoincrement())
+  docentry       Int?
+  cardcode       String?   @db.VarChar(25)
+  cardname       String?   @db.VarChar(200)
+  docnum         BigInt?
+  folionum       String?   @db.VarChar(50)
+  docduedate     DateTime? @db.Date
+  docdate        DateTime? @db.Date
+  taxdate        DateTime? @db.Date
+  po             String?   @db.VarChar(50)
+  doctotal       Decimal?  @db.Decimal(15, 2)
+  clase          String?   @db.VarChar(100)
+  diasPendientes Int?      @map("dias_pendientes")
+  comments       String?
+  saldovencido   Decimal?  @db.Decimal(15, 2)
+  tipocliente    String?   @db.VarChar(10)
+  status         Int?
+
+  @@map("cartera")
+}
+
+model Pedido {
+  id                 Int       @id @default(autoincrement())
+  po                 String?
+  lineanegocio       String?
+  lineaproducto      String?
+  tipocliente        String?
+  itemcode           String?
+  nombreitem         String?
+  sabor              String?
+  presentacion       String?
+  preciounitario     Decimal?  @db.Decimal(18, 2)
+  cantidad           Int?
+  cantidadpendiente  Int?
+  kilos              Decimal?  @db.Decimal(18, 2)
+  kilospendientes    Decimal?  @db.Decimal(18, 2)
+  container          Decimal?  @db.Decimal(4, 2)
+  exportacion_d      Decimal?  @db.Decimal(18, 2)
+  locald             Decimal?  @db.Decimal(18, 2)
+  totallineasd       Decimal?  @db.Decimal(18, 2)
+  totalpendiented    Decimal?  @db.Decimal(18, 2)
+  statuslinea        String?
+  fechapedido        DateTime? @db.Date
+  fechaexpected      DateTime? @db.Date
+  cliente            String?
+  empventas          String?
+  destino            String?
+  puertodestino      String?
+
+  @@map("pedidos")
+}
+
+model Item {
+  id     Int    @id @default(autoincrement())
+  codigo String
+  nombre String
+
+  @@map("items")
+}
