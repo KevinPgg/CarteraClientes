@@ -9,20 +9,22 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node test-connection.js",
+    "seed:cartera": "node scripts/import-cartera.js ./cartera.csv",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
     "dotenv": "^17.2.3",
+    "exceljs": "^4.4.0",
     "express": "^5.2.1",
     "pg": "^8.16.3",
     "prisma": "^5.22.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.11.0",
-    "xlsx": "^0.18.5"
+    "react-router-dom": "^7.11.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
