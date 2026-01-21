@@ -66,23 +66,23 @@ export default function Home() {
         }}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: '3rem' }}>🌱</div>
-            <h4>100% Natural</h4>
-            <p>Sin conservantes ni aditivos artificiales</p>
+            <h4>100% Gluten-Free</h4>
+            <p>Productos como Platano, Yuca y Camote</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '3rem' }}>✡️</div>
+            <h4>Dieta Kosher</h4>
+            <p>Certificado y siguiendo estrictas normas alimentarias</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '3rem' }}>🇪🇨</div>
+            <h4>Producto 100% Ecuatoriano</h4>
+            <p>Elaborado con ingredientes locales de la mejor calidad</p>
           </div>
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: '3rem' }}>📦</div>
             <h4>Gestión Fácil</h4>
             <p>Consulta tu cartera y pedidos en tiempo real</p>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '3rem' }}>💰</div>
-            <h4>Precios Competitivos</h4>
-            <p>Las mejores tarifas para distribuidores</p>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '3rem' }}>🚚</div>
-            <h4>Entrega Rápida</h4>
-            <p>Envíos seguros y puntuales</p>
           </div>
         </div>
       </div>

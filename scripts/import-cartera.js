@@ -10,6 +10,7 @@ dotenv.config();
 // Valor fijo para status (ajusta si prefieres null u otro código)
 const STATUS_VALUE = 0; // "transito"
 const BATCH_SIZE = 500;
+const ALLOWED_DELIMITERS = [',', ';', '\t', '|'];
 
 function toInt(value) {
   if (value === undefined || value === null || value === '') return null;
@@ -26,27 +27,43 @@ function toBigInt(value) {
   }
 }
 
+// Convierte números con posibles separadores latam (p.ej. 3.123,45)
 function toNumber(value) {
   if (value === undefined || value === null || value === '') return null;
-  const cleaned = String(value).replace(/[^0-9.-]/g, '');
-  const n = Number.parseFloat(cleaned);
+  const str = String(value).trim();
+  // Quitar espacios y normalizar separadores: puntos como miles, coma como decimal
+  const normalized = str.replace(/\./g, '').replace(/,/g, '.');
+  const n = Number.parseFloat(normalized);
   return Number.isNaN(n) ? null : n;
 }
 
+// Convierte fechas con formato DD/MM/YYYY o ISO
 function toDate(value) {
   if (!value) return null;
-  const d = new Date(value);
+  const str = String(value).trim();
+
+  // Intentar DD/MM/YYYY
+  const ddmmyyyy = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (ddmmyyyy) {
+    const [, dd, mm, yyyy] = ddmmyyyy;
+    const iso = `${yyyy}-${mm}-${dd}`;
+    const d = new Date(iso);
+    if (!Number.isNaN(d.getTime())) return d;
+  }
+
+  // Fallback: dejar que Date parsee (ISO u otros formatos válidos)
+  const d = new Date(str);
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
-async function readCsv(filePath) {
+async function readCsv(filePath, delimiter = ';') {
   return new Promise((resolve, reject) => {
     const records = [];
     fs.createReadStream(filePath)
       .pipe(
         parse({
           columns: true,
-          delimiter: ';',
+          delimiter,
           skip_empty_lines: true,
           trim: true,
         })
@@ -80,8 +97,7 @@ function mapRow(row) {
 
 async function truncateTable() {
   console.log('🧹 Limpiando tabla cartera...');
-  // Usar DELETE en lugar de TRUNCATE para evitar problemas de permisos
-  await prisma.$executeRawUnsafe('DELETE FROM "cartera"');
+  const deleted = await prisma.cartera.deleteMany();
   
   // Intentar resetear la secuencia (puede fallar si no hay permisos, pero no es crítico)
   try {
@@ -90,6 +106,8 @@ async function truncateTable() {
   } catch (err) {
     console.warn('⚠️  No se pudo resetear la secuencia (IDs continuarán desde el último):', err.message);
   }
+
+  return deleted.count;
 }
 
 async function insertBatches(data) {
@@ -102,9 +120,14 @@ async function insertBatches(data) {
 
 async function main() {
   const csvArg = process.argv[2];
+  const delimiterArg = process.argv[3] || ';';
   if (!csvArg) {
-    console.error('Uso: node scripts/import-cartera.js <ruta-al-csv>');
+    console.error('Uso: node scripts/import-cartera.js <ruta-al-csv> [delimitador]');
     process.exit(1);
+  }
+
+  if (!ALLOWED_DELIMITERS.includes(delimiterArg)) {
+    console.warn(`⚠️  Delimitador "${delimiterArg}" no permitido. Usando ';' por defecto.`);
   }
 
   const csvPath = path.resolve(process.cwd(), csvArg);
@@ -113,8 +136,11 @@ async function main() {
     process.exit(1);
   }
 
+  const delimiter = ALLOWED_DELIMITERS.includes(delimiterArg) ? delimiterArg : ';';
+
   console.log('📄 Leyendo CSV:', csvPath);
-  const rawRows = await readCsv(csvPath);
+  console.log('🔠 Delimitador:', JSON.stringify(delimiter));
+  const rawRows = await readCsv(csvPath, delimiter);
   console.log('📊 Filas leídas:', rawRows.length);
 
   const mapped = rawRows
@@ -123,10 +149,13 @@ async function main() {
 
   console.log('📦 Filas mapeadas listas para insertar:', mapped.length);
 
-  await truncateTable();
+  const deletedCount = await truncateTable();
+  console.log('🧹 Registros eliminados:', deletedCount);
+
   await insertBatches(mapped);
 
   console.log('✅ Importación completa');
+  console.log(`ℹ️  Insertados: ${mapped.length}`);
 }
 
 main()

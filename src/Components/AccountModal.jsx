@@ -6,6 +6,7 @@ import OrderBuilded from "./OrderBuilded";
 import PODetalle from "./PODetalle";
 import POList from "./POList";
 import ResumenOrdenes from "./ResumenOrdenes";
+import Sistemas from "./Sistemas";
 import { getPedidos } from "../Services/OrderService";
 import "../styles/Pedidos.css";
 import SelectClient from "./selectClient";
@@ -71,6 +72,14 @@ export default function AccountModal() {
         >
           Pedidos
         </button>
+        {auth.tipo === 'S' && (
+          <button
+            className={`tab-button ${active === 3 ? "active" : ""}`}
+            onClick={() => setActive(3)}
+          >
+            Sistemas
+          </button>
+        )}
       </div>
 
       <div className="tab-content">
@@ -178,6 +187,12 @@ export default function AccountModal() {
                 {viewType === "detalle" && <PODetalle pedidos={pedidos} cardName={auth.tipo === 'C' ? auth.cardName : auth.userSelected} />}
               </>
             )}
+          </div>
+        )}
+
+        {active === 3 && auth.tipo === 'S' && (
+          <div>
+            <Sistemas />
           </div>
         )}
       </div>

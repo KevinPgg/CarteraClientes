@@ -9,6 +9,7 @@ import authRoutes from './routes/auth.js';
 import carteraRoutes from './routes/cartera.js';
 import pedidosRoutes from './routes/pedidos.js';
 import itemsRoutes from './routes/items.js';
+import toolsRoutes from './routes/tools.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,23 +52,19 @@ async function validateDatabaseConnection() {
 
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // Servir archivos estáticos del build de React
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
-console.log(`📁 Sirviendo archivos estáticos desde: ${distPath}`);
 
 // Logging middleware con más detalle
 app.use((req, res, next) => {
   // Solo log para rutas API, no para archivos estáticos
   if (req.path.startsWith('/api') || req.path === '/health') {
     const timestamp = new Date().toISOString();
-    console.log(`\n📝 [${timestamp}] ${req.method} ${req.path}`);
-    
     if (Object.keys(req.query).length > 0) {
-      console.log('   Query params:', req.query);
     }
     
     if (req.body && Object.keys(req.body).length > 0) {
@@ -75,7 +72,6 @@ app.use((req, res, next) => {
       const sanitizedBody = { ...req.body };
       if (sanitizedBody.contrasena) sanitizedBody.contrasena = '***';
       if (sanitizedBody.password) sanitizedBody.password = '***';
-      console.log('   Body:', sanitizedBody);
     }
   }
   
@@ -110,6 +106,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/cartera', carteraRoutes);
 app.use('/api/pedidos', pedidosRoutes);
 app.use('/api/items', itemsRoutes);
+app.use('/api/tools', toolsRoutes);
 
 // 404 para rutas API no encontradas
 app.use('/api', (req, res) => {

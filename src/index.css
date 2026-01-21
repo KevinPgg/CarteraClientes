@@ -1046,3 +1046,364 @@ button:focus-visible {
   width: 18px !important;
   height: 18px !important;
 }
+
+/* ============================================
+   Sistemas - Admin Users & API Tester
+   ============================================ */
+
+.sistemas-container {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.sistemas-container h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+#sistemasUl {
+  gap: var(--spacing-sm);
+  border-bottom: none;
+  list-style: none;
+}
+
+#sistemasUl .nav-link {
+  border: 1px solid transparent;
+  color: var(--color-secondary-dark);
+  background: transparent;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base), color var(--transition-fast);
+}
+
+#sistemasUl .nav-link:hover {
+  background: var(--color-primary-light);
+  color: var(--color-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+#sistemasUl .nav-link.active {
+  background: var(--color-primary);
+  color: var(--color-secondary-dark);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+.user-management .table {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.user-management .table thead th {
+  background: var(--color-primary-light);
+  color: var(--color-secondary-dark);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.user-management .table tbody td {
+  vertical-align: middle;
+}
+
+.user-management .badge {
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.user-management .modal-content {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.user-management .modal-header {
+  background: var(--color-primary-light);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.user-management .modal-footer {
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.user-management .btn-outline-primary,
+.user-management .btn-outline-danger {
+  border-radius: var(--radius-sm);
+}
+
+.user-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.user-modal-overlay .modal.d-block {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-modal-overlay .modal-dialog {
+  max-width: 600px;
+  width: 90%;
+}
+
+.user-management .modal-content {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  background: var(--color-bg);
+}
+
+.user-management .modal-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--spacing-lg);
+}
+
+.user-management .modal-header .modal-title {
+  color: var(--color-secondary-dark);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin:0;
+}
+
+.user-management .modal-header .btn-close {
+  opacity: 0.7;
+  filter: invert(0.3);
+}
+
+.user-management .modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+.user-management .modal-body {
+  padding: var(--spacing-xl);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.user-management .modal-body .form-label {
+  font-weight: 600;
+  color: var(--color-secondary-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+.user-management .modal-body .form-control,
+.user-management .modal-body .form-select {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: white;
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.user-management .modal-body .form-control:focus,
+.user-management .modal-body .form-select:focus {
+  border-color: var(--color-secondary-light);
+  box-shadow: 0 0 0 3px rgba(107, 143, 61, 0.15);
+  background: white;
+}
+
+.user-management .modal-body .input-group .btn {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.user-management .modal-footer {
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
+.user-management .modal-footer .btn {
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  transition: all var(--transition-fast);
+}
+
+.user-management .modal-footer .btn-secondary {
+  border-color: var(--color-border);
+  color: var(--color-secondary-dark);
+  background: white;
+}
+
+.user-management .modal-footer .btn-secondary:hover {
+  background: var(--color-bg);
+  border-color: var(--color-secondary-light);
+}
+
+.user-management .modal-footer .btn-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary-dark);
+  color: var(--color-secondary-dark);
+}
+
+.user-management .modal-footer .btn-primary:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-secondary-dark);
+}
+
+.user-management .modal-body .form-check-input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  width: 1.25em;
+  height: 1.25em;
+  cursor: pointer;
+}
+
+.user-management .modal-body .form-check-input:checked {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent-dark);
+}
+
+.api-tester .card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.api-tester .card-header {
+  background: var(--color-primary-light);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: 600;
+}
+
+.api-tester .badge {
+  border-radius: var(--radius-full);
+  padding: 0.4rem 0.8rem;
+}
+
+.api-tester input,
+.api-tester select,
+.api-tester textarea {
+  border-color: var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.api-tester input:focus,
+.api-tester select:focus,
+.api-tester textarea:focus {
+  border-color: var(--color-secondary-light);
+  box-shadow: 0 0 0 3px rgba(79, 174, 79, 0.2);
+}
+
+.api-tester pre {
+  background: #0f1722;
+  color: #e8e8e8;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.api-tester .btn-outline-secondary {
+  border-color: var(--color-border);
+}
+
+.api-tester .btn-primary {
+  box-shadow: var(--shadow-sm);
+}
+
+.poblar-base {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.poblar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.poblar-form .form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.delimiter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.delimiter-options .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.8rem;
+  background: var(--color-bg-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.delimiter-options .chip input {
+  accent-color: var(--color-secondary);
+}
+
+.delimiter-options .chip.active {
+  background: var(--color-primary);
+  border-color: var(--color-secondary-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.result-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-secondary);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.result-body p {
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.flex-column-baseline{
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
